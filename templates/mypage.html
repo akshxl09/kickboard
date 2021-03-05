@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+
+<html> 
+
+<head>
+
+<meta charset="UTF-8">
+<title>킥보드공유시스템 마이페이지 </title>
+<link href="/static/kick.css" rel= "stylesheet">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Bootstrap -->
+  <link href="/static/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #Hide{display:none;}
+    #container {
+      width: 70%;
+      margin: 0 auto;     /* 가로로 중앙에 배치 */
+      padding-top: 10%;   /* 테두리와 내용 사이의 패딩 여백 */
+    }
+     
+    #list {
+      text-align: center;
+    }
+   
+    #write {
+      text-align: right;
+    }
+     
+    /* Bootstrap 수정 */
+    .table > thead {
+      background-color: #b3c6ff;
+    }
+    .table > thead > tr > th {
+      text-align: center;
+    }
+    .table-hover > tbody > tr:hover {
+      background-color: #e6ecff;
+    }
+    .table > tbody > tr > td {
+      text-align: center;
+    }
+    .table > tbody > tr > #title {
+      text-align: center;
+    }
+     
+    div > #paging {
+      text-align: center;
+    }
+     
+    .hit {
+      animation-name: blink;
+      animation-duration: 1.5s;
+      animation-timing-function: ease;
+      animation-iteration-count: infinite;
+      /* 위 속성들을 한 줄로 표기하기 */
+      /* -webkit-animation: blink 1.5s ease infinite; */
+    }
+     
+    /* 애니메이션 지점 설정하기 */
+    /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
+    @keyframes blink {
+      from {color: white;}
+      30% {color: yellow;}
+      to {color: red; font-weight: bold;}
+      /* 0% {color:white;}
+      30% {color: yellow;}
+      100% {color:red; font-weight: bold;} */
+    }
+  </style>
+</head>
+<body onload="display()">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="/">KICKBOARD</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+              {%if 'userid' in session%}
+                  <li class="nav-item">
+                      <a class="nav-link" href="/logout">logout</a>
+                  </li>
+              {%endif%}
+                <a class="nav-link" href="/mypage">mypage</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/inquiry">inquiry</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div module="layout_logincheck">
+      </div>
+
+    <div id="container">
+
+
+      <div id="list">
+        <b>킥보드 이용내역</b>
+      </div>
+       
+       
+      <div id="mypage">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <th width="200px">킥보드 번호</th>       <!-- 얘는 다 고쳐야됨 -->
+              <th width="250px">금액</th>
+              <th width="250px">이용시간</th>
+              <th width="250px">날짜</th>
+            </tr>
+          </thead>
+          {% for obj in data_list2%}
+          <tbody>
+            <c:forEach var="article" items="${articles}" varStatus="status">
+              <tr>
+                <td>{{obj.k_id}}</td>
+                <td>{{obj.payment}}원</td>
+                <td>{{obj.borrowed_time}}초</td>
+                <td>{{obj.time}}</td>
+              <tr>
+            </c:forEach>
+          </tbody>
+          {% endfor %}
+        </table>
+         
+       </div>
+     </div>
+
+  <div id="container">
+      
+
+    <div id="list">
+      <b>내 문의내역</b>
+    </div>
+     
+     
+    <div id="show">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th width="100px">번호</th>
+            <th width="600px">제목</th>
+            <th width="200px">작성일</th>
+          </tr>
+        </thead>
+          {% for obj in data_list%}
+          <tbody>
+            <c:forEach var="article" items="${articles}" varStatus="status">
+              <tr>
+                <td>{{obj.num}}</td>
+                <td><a href="javascript:display()" onclick="abc(this)">{{obj.title}}</a></td>
+                <td>{{obj.time}}</td>
+              <tr>
+            </c:forEach>
+          </tbody>
+          {% endfor %}
+      </table>
+       
+    </div>
+  </div>
+    <div id="Hide" class="container">
+      <div class = "row">
+
+      </div>
+
+      
+    </div>
+
+
+
+</body>
+<script src="/static/host.js"></script>
+<script src="/static/kickboard.js"></script>
+</html>
