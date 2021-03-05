@@ -65,3 +65,6 @@ def register():
                 return "<script type='text/javascript'>alert('중복된 아이디가 존재합니다.');document.location.href='/register';</script>"
  
 
+@bp.route('/not')
+def nothing():
+    ...
